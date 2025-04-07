@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package exchange;
+
+option go_package = ".;currency";
+
+service Currency {
+  // Получение курсов валют
+  rpc GetRates(RatesRequest) returns (RatesResponse);
+  // Конвертация валюты
+  rpc Convert(ConvertRequest) returns (ConvertResponse);
+}
+
+message RatesRequest {
+  string base_currency = 1;
+  repeated string currencies = 2;
+}
+
+message RatesResponse {
+  string base_currency = 1;
+  map<string, double> rates = 2;
+  string timestamp = 3;
+}
+
+message ConvertRequest {
+  string from = 1;
+  string to = 2;
+  double amount = 3;
+}
+
+message ConvertResponse {
+  string from = 1;
+  string to = 2;
+  double amount = 3;
+  double converted_amount = 4;
+  double rate = 5;
+  string timestamp = 6;
+}
