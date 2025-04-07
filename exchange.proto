@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package exchange;
 
-option go_package = ".;currency";
+option go_package = "github.com/gipnozhard/protoexchange";
 
 service Currency {
   // Получение курсов валют
