@@ -1,1 +1,1 @@
-module protoexchange
+module github.com/gipnozhard/protoexchange
