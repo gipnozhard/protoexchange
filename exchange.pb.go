@@ -21,28 +21,26 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type RatesRequest struct {
+type Empty struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	BaseCurrency  string                 `protobuf:"bytes,1,opt,name=base_currency,json=baseCurrency,proto3" json:"base_currency,omitempty"`
-	Currencies    []string               `protobuf:"bytes,2,rep,name=currencies,proto3" json:"currencies,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *RatesRequest) Reset() {
-	*x = RatesRequest{}
+func (x *Empty) Reset() {
+	*x = Empty{}
 	mi := &file_exchange_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RatesRequest) String() string {
+func (x *Empty) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RatesRequest) ProtoMessage() {}
+func (*Empty) ProtoMessage() {}
 
-func (x *RatesRequest) ProtoReflect() protoreflect.Message {
+func (x *Empty) ProtoReflect() protoreflect.Message {
 	mi := &file_exchange_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -54,25 +52,12 @@ func (x *RatesRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RatesRequest.ProtoReflect.Descriptor instead.
-func (*RatesRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use Empty.ProtoReflect.Descriptor instead.
+func (*Empty) Descriptor() ([]byte, []int) {
 	return file_exchange_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *RatesRequest) GetBaseCurrency() string {
-	if x != nil {
-		return x.BaseCurrency
-	}
-	return ""
-}
-
-func (x *RatesRequest) GetCurrencies() []string {
-	if x != nil {
-		return x.Currencies
-	}
-	return nil
-}
-
+// Ответ Валют
 type RatesResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	BaseCurrency  string                 `protobuf:"bytes,1,opt,name=base_currency,json=baseCurrency,proto3" json:"base_currency,omitempty"`
@@ -133,6 +118,7 @@ func (x *RatesResponse) GetTimestamp() string {
 	return ""
 }
 
+// Обмен запрос
 type ConvertRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	From          string                 `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
@@ -193,6 +179,7 @@ func (x *ConvertRequest) GetAmount() float64 {
 	return 0
 }
 
+// Обмен ответ
 type ConvertResponse struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	From            string                 `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
@@ -281,12 +268,8 @@ var File_exchange_proto protoreflect.FileDescriptor
 
 const file_exchange_proto_rawDesc = "" +
 	"\n" +
-	"\x0eexchange.proto\x12\bexchange\"S\n" +
-	"\fRatesRequest\x12#\n" +
-	"\rbase_currency\x18\x01 \x01(\tR\fbaseCurrency\x12\x1e\n" +
-	"\n" +
-	"currencies\x18\x02 \x03(\tR\n" +
-	"currencies\"\xc6\x01\n" +
+	"\x0eexchange.proto\x12\bexchange\"\a\n" +
+	"\x05Empty\"\xc6\x01\n" +
 	"\rRatesResponse\x12#\n" +
 	"\rbase_currency\x18\x01 \x01(\tR\fbaseCurrency\x128\n" +
 	"\x05rates\x18\x02 \x03(\v2\".exchange.RatesResponse.RatesEntryR\x05rates\x12\x1c\n" +
@@ -305,9 +288,9 @@ const file_exchange_proto_rawDesc = "" +
 	"\x06amount\x18\x03 \x01(\x01R\x06amount\x12)\n" +
 	"\x10converted_amount\x18\x04 \x01(\x01R\x0fconvertedAmount\x12\x12\n" +
 	"\x04rate\x18\x05 \x01(\x01R\x04rate\x12\x1c\n" +
-	"\ttimestamp\x18\x06 \x01(\tR\ttimestamp2\x87\x01\n" +
-	"\bCurrency\x12;\n" +
-	"\bGetRates\x12\x16.exchange.RatesRequest\x1a\x17.exchange.RatesResponse\x12>\n" +
+	"\ttimestamp\x18\x06 \x01(\tR\ttimestamp2\x80\x01\n" +
+	"\bCurrency\x124\n" +
+	"\bGetRates\x12\x0f.exchange.Empty\x1a\x17.exchange.RatesResponse\x12>\n" +
 	"\aConvert\x12\x18.exchange.ConvertRequest\x1a\x19.exchange.ConvertResponseB%Z#github.com/gipnozhard/protoexchangeb\x06proto3"
 
 var (
@@ -324,7 +307,7 @@ func file_exchange_proto_rawDescGZIP() []byte {
 
 var file_exchange_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_exchange_proto_goTypes = []any{
-	(*RatesRequest)(nil),    // 0: exchange.RatesRequest
+	(*Empty)(nil),           // 0: exchange.Empty
 	(*RatesResponse)(nil),   // 1: exchange.RatesResponse
 	(*ConvertRequest)(nil),  // 2: exchange.ConvertRequest
 	(*ConvertResponse)(nil), // 3: exchange.ConvertResponse
@@ -332,7 +315,7 @@ var file_exchange_proto_goTypes = []any{
 }
 var file_exchange_proto_depIdxs = []int32{
 	4, // 0: exchange.RatesResponse.rates:type_name -> exchange.RatesResponse.RatesEntry
-	0, // 1: exchange.Currency.GetRates:input_type -> exchange.RatesRequest
+	0, // 1: exchange.Currency.GetRates:input_type -> exchange.Empty
 	2, // 2: exchange.Currency.Convert:input_type -> exchange.ConvertRequest
 	1, // 3: exchange.Currency.GetRates:output_type -> exchange.RatesResponse
 	3, // 4: exchange.Currency.Convert:output_type -> exchange.ConvertResponse

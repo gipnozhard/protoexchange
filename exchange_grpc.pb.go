@@ -28,7 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CurrencyClient interface {
 	// Получение курсов валют
-	GetRates(ctx context.Context, in *RatesRequest, opts ...grpc.CallOption) (*RatesResponse, error)
+	GetRates(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*RatesResponse, error)
 	// Конвертация валюты
 	Convert(ctx context.Context, in *ConvertRequest, opts ...grpc.CallOption) (*ConvertResponse, error)
 }
@@ -41,7 +41,7 @@ func NewCurrencyClient(cc grpc.ClientConnInterface) CurrencyClient {
 	return &currencyClient{cc}
 }
 
-func (c *currencyClient) GetRates(ctx context.Context, in *RatesRequest, opts ...grpc.CallOption) (*RatesResponse, error) {
+func (c *currencyClient) GetRates(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*RatesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(RatesResponse)
 	err := c.cc.Invoke(ctx, Currency_GetRates_FullMethodName, in, out, cOpts...)
@@ -66,7 +66,7 @@ func (c *currencyClient) Convert(ctx context.Context, in *ConvertRequest, opts .
 // for forward compatibility.
 type CurrencyServer interface {
 	// Получение курсов валют
-	GetRates(context.Context, *RatesRequest) (*RatesResponse, error)
+	GetRates(context.Context, *Empty) (*RatesResponse, error)
 	// Конвертация валюты
 	Convert(context.Context, *ConvertRequest) (*ConvertResponse, error)
 	mustEmbedUnimplementedCurrencyServer()
@@ -79,7 +79,7 @@ type CurrencyServer interface {
 // pointer dereference when methods are called.
 type UnimplementedCurrencyServer struct{}
 
-func (UnimplementedCurrencyServer) GetRates(context.Context, *RatesRequest) (*RatesResponse, error) {
+func (UnimplementedCurrencyServer) GetRates(context.Context, *Empty) (*RatesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRates not implemented")
 }
 func (UnimplementedCurrencyServer) Convert(context.Context, *ConvertRequest) (*ConvertResponse, error) {
@@ -107,7 +107,7 @@ func RegisterCurrencyServer(s grpc.ServiceRegistrar, srv CurrencyServer) {
 }
 
 func _Currency_GetRates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RatesRequest)
+	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -119,7 +119,7 @@ func _Currency_GetRates_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: Currency_GetRates_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CurrencyServer).GetRates(ctx, req.(*RatesRequest))
+		return srv.(CurrencyServer).GetRates(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
